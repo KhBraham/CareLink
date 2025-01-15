@@ -119,7 +119,7 @@ php artisan migrate
 
 7. Start the backend server:
 ```bash
-php artisan serve
+php artisan serve --port 8000
 ```
 
 #### Frontend Setup (Angular)
@@ -139,7 +139,7 @@ Update `src/environments/environment.ts` with your backend API URL if necessary.
 
 4. Start the development server:
 ```bash
-ng serve
+ng serve --port 4200
 ```
 
 The application will be available at `http://localhost:4200`
