@@ -75,7 +75,7 @@ CareLink is a modern healthcare management platform that connects patients with 
 - Composer
 - Node.js >= 16.0
 - npm or yarn
-- MySQL/MariaDB
+- SQLite
 - Git
 
 ### Installation
@@ -97,27 +97,67 @@ composer install
 cp .env.example .env
 ```
 
-4. Generate application key:
+4. Configure your database in `.env` file:
+```env
+APP_NAME=CareLink
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+APP_LOCALE=en
+APP_FALLBACK_LOCALE=en
+APP_FAKER_LOCALE=en_US
+
+APP_MAINTENANCE_DRIVER=file
+
+PHP_CLI_SERVER_WORKERS=4
+
+BCRYPT_ROUNDS=12
+
+LOG_CHANNEL=stack
+LOG_STACK=single
+LOG_DEPRECATIONS_CHANNEL=null
+LOG_LEVEL=debug
+
+DB_CONNECTION=sqlite
+
+CORS_ALLOWED_ORIGINS=http://localhost:4200
+
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+SESSION_ENCRYPT=false
+SESSION_PATH=/
+SESSION_DOMAIN=null
+
+BROADCAST_CONNECTION=log
+FILESYSTEM_DISK=local
+QUEUE_CONNECTION=database
+
+CACHE_STORE=database
+CACHE_PREFIX=
+
+VITE_APP_NAME="${APP_NAME}"
+
+HUGGINGFACE_API_KEY=your_huggingface_api_key
+```
+
+5. Create an empty SQLite database:
+```bash
+touch database/database.sqlite
+```
+
+6. Generate application key:
 ```bash
 php artisan key:generate
 ```
 
-5. Configure your database in `.env` file:
-```env
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=carelink
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
-```
-
-6. Run migrations:
+7. Run migrations:
 ```bash
 php artisan migrate
 ```
 
-7. Start the backend server:
+8. Start the backend server:
 ```bash
 php artisan serve --port 8000
 ```
@@ -148,7 +188,7 @@ The application will be available at `http://localhost:4200`
 
 ### Backend
 - Laravel 10
-- MySQL
+- SQLite
 - PHP 8.1
 - Laravel Sanctum for authentication
 - OpenAI Integration for chatbot
@@ -159,4 +199,3 @@ The application will be available at `http://localhost:4200`
 - TypeScript
 - RxJS
 - Angular Material
-
