@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="400px" viewBox="0 0 800 400" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="400" fill="#F3F4F6"/>
+    <g transform="translate(350,170)">
+        <path d="M50,0 A50,50 0 1,1 50,-0.1" fill="none" stroke="#1e2756" stroke-width="8"/>
+        <path d="M25,25 L75,25 M50,0 L50,50" stroke="#1e2756" stroke-width="8" stroke-linecap="round"/>
+    </g>
+    <text x="400" y="260" font-family="Arial" font-size="16" fill="#1e2756" text-anchor="middle">Health News</text>
+</svg>

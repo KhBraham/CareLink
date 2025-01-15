@@ -1,0 +1,86 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6">Doctor Dashboard</h1>
+
+  <!-- Quick Stats -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Total Appointments</h3>
+      <p class="text-3xl font-bold text-[#00A3FF]">{{getTotalAppointmentsCount()}}</p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Confirmed</h3>
+      <p class="text-3xl font-bold text-[#00A3FF]">
+        {{getConfirmedAppointmentsCount()}}
+      </p>
+    </div>
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Completed</h3>
+      <p class="text-3xl font-bold text-[#00A3FF]">
+        {{getCompletedAppointmentsCount()}}
+      </p>
+    </div>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    {{error}}
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="flex justify-center items-center py-8">
+    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#00A3FF]"></div>
+  </div>
+
+  <!-- Upcoming Appointments -->
+  <div *ngIf="!isLoading" class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-bold mb-4">Upcoming Appointments</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead>
+          <tr class="bg-gray-50">
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Patient</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <tr *ngFor="let appointment of appointments">
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{formatDateTime(appointment.appointment_datetime).date}} 
+              <br>
+              <span class="text-gray-500">{{formatDateTime(appointment.appointment_datetime).time}}</span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{appointment.patient.name}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+              {{appointment.reason_for_visit}}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span [class]="getStatusClass(appointment.status)">
+                {{appointment.status | titlecase}}
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <a [routerLink]="['/doctor/appointment', appointment.id]"
+                 class="text-[#00A3FF] hover:text-[#0077CC] flex items-center gap-1 text-sm font-medium">
+                View Details
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </td>
+          </tr>
+          <!-- No Appointments State -->
+          <tr *ngIf="appointments.length === 0">
+            <td colspan="5" class="px-6 py-4 text-center text-gray-500">
+              No upcoming appointments found
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

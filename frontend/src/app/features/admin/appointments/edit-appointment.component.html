@@ -1,0 +1,127 @@
+<div class="container mx-auto px-4 py-8">
+  <!-- Error State -->
+  <div *ngIf="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+    {{ error }}
+  </div>
+
+  <!-- Appointment Details -->
+  <div *ngIf="appointment" class="bg-slate-100 rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <!-- Patient Information -->
+    <div class="p-6 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Patient Information</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600">Name</p>
+          <p class="text-gray-900">{{ appointment.patient.name }}</p>
+        </div>
+        <div>
+          <p class="text-gray-600">Email</p>
+          <p class="text-gray-900">{{ appointment.patient.email }}</p>
+        </div>
+        <div>
+          <p class="text-gray-600">Phone</p>
+          <p class="text-gray-900">{{ appointment.patient.phone }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Current Appointment Details -->
+    <div class="p-6 border-b border-gray-100">
+      <h2 class="text-lg font-semibold text-gray-900 mb-4">Current Appointment Details</h2>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <p class="text-gray-600">Reason for Visit</p>
+          <p class="text-gray-900">{{ appointment.reason_for_visit }}</p>
+        </div>
+        <div>
+          <p class="text-gray-600">Symptoms</p>
+          <p class="text-gray-900">{{ appointment.symptoms }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Appointment Form -->
+    <form (ngSubmit)="updateAppointment()" class="p-6">
+      <!-- Doctor Selection -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Assign Doctor <span class="text-red-500">*</span>
+        </label>
+        <select
+          [(ngModel)]="formData.doctorId"
+          name="doctorId"
+          required
+          class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e2756] focus:border-transparent"
+        >
+          <option [ngValue]="0">Select a doctor</option>
+          <option *ngFor="let doctor of availableDoctors" [ngValue]="doctor.id">
+             {{ doctor.name }} - {{ doctor.specialization }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Date and Time -->
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Date <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="date"
+            [(ngModel)]="formData.appointmentDate"
+            name="appointmentDate"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e2756] focus:border-transparent"
+          >
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">
+            Time <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="time"
+            [(ngModel)]="formData.appointmentTime"
+            name="appointmentTime"
+            required
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e2756] focus:border-transparent"
+          >
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2">
+          Status <span class="text-red-500">*</span>
+        </label>
+        <select
+          [(ngModel)]="formData.status"
+          name="status"
+          required
+          class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#1e2756] focus:border-transparent"
+        >
+          <option value="pending">Pending</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+
+      <!-- Submit Buttons -->
+      <div class="flex justify-end space-x-4">
+        <button
+          type="button"
+          (click)="router.navigate(['/admin/dashboard'])"
+          class="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none"
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          [disabled]="!isFormValid()"
+          class="px-4 py-2 text-white bg-[#1e2756] rounded-lg hover:bg-[#161d40] focus:outline-none disabled:opacity-50"
+        >
+          Update Appointment
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
